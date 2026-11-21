@@ -20,6 +20,12 @@ function checkJoke(text: string): void {
 
 function main(): void {
   checkJoke(JOKE);
+  // With --stdout, print the joke instead of writing entry.txt, so the
+  // line can be previewed or piped without touching the output directory.
+  if (process.argv.includes("--stdout")) {
+    process.stdout.write(JOKE + "\n");
+    return;
+  }
   const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, "entry.txt"), JOKE, "utf8");
